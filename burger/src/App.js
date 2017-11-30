@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import './App.css'
-import Person from './Person/Person'
+import React, { Component } from 'react';
+import './App.css';
+import Person from './Person/Person';
 
 class App extends Component {
   state = {
@@ -42,7 +42,8 @@ class App extends Component {
 
   render () {
     let styles = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
@@ -64,12 +65,21 @@ class App extends Component {
           })}
         </div>
       )
+      styles.backgroundColor = 'red';
+    }
+
+    const classes = [];
+    if(this.state.persons.length <= 2){
+      classes.push('red');
+    }
+    if(this.state.persons.length <= 1){
+      classes.push('bold');
     }
 
     return (
       <div className="App">
         <h1>Hi I am a React App</h1>
-        <p>this is working</p>
+        <p className={classes.join(' ')}>this is working</p>
         <button
           style={styles}
           onClick={this.togglePersonsHandler}>Toggle Persons
@@ -80,4 +90,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default App;
