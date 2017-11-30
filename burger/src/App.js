@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import classes from './App.css';
-import Person from './Person/Person';
+import React, { Component } from 'react'
+import classes from './App.css'
+import Person from './Person/Person'
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary'
 
 class App extends Component {
   state = {
@@ -14,24 +15,24 @@ class App extends Component {
 
   nameChangedHandler = (event, id) => {
     const personIndex = this.state.persons.findIndex(p => {
-      return p.id === id;
-    });
+      return p.id === id
+    })
 
-    const person = {...this.state.persons[personIndex]};
+    const person = {...this.state.persons[personIndex]}
     //const person = Object.assign({}, this.state.persons[personIndex]) //older version
 
-    person.name = event.target.value;
+    person.name = event.target.value
 
-    const persons = [...this.state.persons];
-    persons[personIndex] = person;
+    const persons = [...this.state.persons]
+    persons[personIndex] = person
 
     this.setState({persons: persons})
   }
 
   deletePersonHandler = (personIndex) => {
     //const persons = this.state.persons.slice(); //copies the array
-    const persons = [...this.state.persons];
-    persons.splice(personIndex, 1);
+    const persons = [...this.state.persons]
+    persons.splice(personIndex, 1)
     this.setState({persons: persons})
   }
 
@@ -41,31 +42,31 @@ class App extends Component {
   }
 
   render () {
-    let persons = null;
-    let btnClass = '';
-    if(this.state.showPersons){
+    let persons = null
+    let btnClass = ''
+    if (this.state.showPersons) {
       persons = (
         <div>
           {this.state.persons.map((person, index) => {
-            return <Person
-              key={person.id}
-              click={() => this.deletePersonHandler(index)}
-              name={person.name}
-              age={person.age}
-              changed={(event) => this.nameChangedHandler(event, person.id)}
-            />
+            return <ErrorBoundary  key={person.id}>
+              <Person
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                changed={(event) => this.nameChangedHandler(event, person.id)}/>
+            </ErrorBoundary>
           })}
         </div>
       )
-      btnClass = classes.Red;
+      btnClass = classes.Red
     }
 
-    const assignedClasses = [];
-    if(this.state.persons.length <= 2){
-      assignedClasses.push(classes.red);
+    const assignedClasses = []
+    if (this.state.persons.length <= 2) {
+      assignedClasses.push(classes.red)
     }
-    if(this.state.persons.length <= 1){
-      assignedClasses.push(classes.bold);
+    if (this.state.persons.length <= 1) {
+      assignedClasses.push(classes.bold)
     }
 
     return (
@@ -82,4 +83,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
